@@ -20,7 +20,7 @@ node {
         //**** BAT tests to be run here -- ADD LATER
         //app1.push()
 
-        docker.withRegistry('https://www.docker.com/', 'psawaikar-DockerHub') {
+        docker.withRegistry('psawaikar-DockerHub') {
 
             app1.push()
         }
