@@ -1,4 +1,5 @@
 node {
+    def app1
 
     stage('Clone Repo') {
         checkout scm
@@ -7,10 +8,10 @@ node {
 
     stage('Build') {
         //echo "Hello World"
-        //app1 = docker.image('psawaikar/jenkinstestdimage')
-        docker.image('alpine:latest').inside {
-        sh 'echo Hello World!'
-        }
+        app1 = docker.build('psawaikar/jenkinstestdimage')
+        //docker.image('alpine:latest').inside {
+        //sh 'echo Hello World!'
+        //}
     }
 
 }
