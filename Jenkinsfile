@@ -18,12 +18,12 @@ node {
 
     stage('BAT') {
         //**** BAT tests to be run here -- ADD LATER
-        app1.push()
+        //app1.push()
 
-        //docker.withRegistry('https://www.docker.com/', 'psawaikar-DockerHub') {
+        docker.withRegistry('https://registry.hub.docker.com/', 'psawaikar-DockerHub') {
 
-        //    app1.push('psawaikar/testjenkins:2.0')
-        //}
+            app1.push('2.0')
+        }
     }
 
     stage('QA') {
