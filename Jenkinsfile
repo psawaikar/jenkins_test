@@ -9,7 +9,7 @@ node {
     stage('Build') {
         echo "Hello World"
         //app1 = docker.image('psawaikar/jenkinstestdimage')
-        docker.image('psawaikar/d1')
+        docker.image('alpine:latest')
     }
 
 }
