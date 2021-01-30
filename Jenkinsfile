@@ -8,7 +8,8 @@ node {
 
     stage('Build') {
         echo "Hello World"
-        app1 = docker.image('psawaikar/jenkinstestdimage')
+        //app1 = docker.image('psawaikar/jenkinstestdimage')
+        docker.image('psawaikar/d1')
     }
 
 }
