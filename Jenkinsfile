@@ -20,9 +20,9 @@ node {
         //**** BAT tests to be run here -- ADD LATER
         //app1.push()
 
-        docker.withRegistry('psawaikar-DockerHub') {
+        docker.withRegistry('https://www.docker.com/', 'psawaikar-DockerHub') {
 
-            app1.push()
+            app1.push('psawaikar/testjenkins:2.0')
         }
     }
 
