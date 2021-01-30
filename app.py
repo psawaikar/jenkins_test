@@ -5,6 +5,7 @@ from flask import Flask
 
 print("Statement1")
 print("Statement2")
+print("Statement3")
 
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
