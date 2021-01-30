@@ -1,10 +1,13 @@
 node {
+
+    def app1
+
     stage('Clone Repo') {
         checkout scm
     }
 
     stage('Build') {
-        echo "Building..."
+        app1 = docker.image('psawaikar/jenkinstestdimage')
     }
 
 }
