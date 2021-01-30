@@ -1,7 +1,7 @@
 node {
     def app1
 
-    stage('Clone Repo') {
+    stage('Checkout') {
         checkout scm
     }
 
@@ -18,7 +18,12 @@ node {
 
     stage('BAT') {
         //**** BAT tests to be run here -- ADD LATER
-        app1.push()
+        //app1.push()
+
+        docker.withRegistry('https://hub.docker.com/', 'psawaikar-DockerHub') {
+
+            app1.push()
+        }
     }
 
     stage('QA') {
