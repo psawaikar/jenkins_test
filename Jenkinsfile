@@ -7,6 +7,7 @@ node {
     }
 
     stage('Build') {
+        echo "Hello World"
         app1 = docker.image('psawaikar/jenkinstestdimage')
     }
 
