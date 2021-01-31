@@ -24,6 +24,14 @@ node {
 
             app1.push('2.0')
         }
+
+        def workspace = WORKSPACE
+        // ${workspace} will now contain an absolute path to job workspace on slave
+
+        workspace = env.WORKSPACE
+
+         echo "Current workspace is ${env.WORKSPACE}"
+
     }
 
     stage('QA') {
