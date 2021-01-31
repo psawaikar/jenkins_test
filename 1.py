@@ -1,0 +1,1 @@
+print("Inside 1.py")
