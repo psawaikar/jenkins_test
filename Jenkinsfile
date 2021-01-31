@@ -26,20 +26,18 @@ node {
         }
 
         def workspace = WORKSPACE
-        // ${workspace} will now contain an absolute path to job workspace on slave
+    // ${workspace} will now contain an absolute path to job workspace on slave
 
         workspace = env.WORKSPACE
+    // ${workspace} will still contain an absolute path to job workspace on slave
 
-         echo "Current workspace is ${env.WORKSPACE}"
+        // When using a GString at least later Jenkins versions could only handle the env.WORKSPACE variant:
+        echo "Current workspace is ${env.WORKSPACE}"
 
-         withAWS(region:'us-east-2',credentials:'parag') {
-
-                 def identity=awsIdentity();//Log AWS credentials
-
-                // Upload files from working directory 'dist' in your project workspace
-                s3Upload(bucket:"ambuilds/testbuild", workingDir:workspace, includePathPattern:'**/*');
-            }
-
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-parag', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+         sh "aws s3 ls"
+         sh "aws s3 cp ${workspace} s3://ambuilds/testbuild --recursive"
+         }
     }
 
     stage('QA') {
