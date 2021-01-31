@@ -32,6 +32,14 @@ node {
 
          echo "Current workspace is ${env.WORKSPACE}"
 
+         withAWS(region:'us-east-2',credentials:'parag') {
+
+                 def identity=awsIdentity();//Log AWS credentials
+
+                // Upload files from working directory 'dist' in your project workspace
+                s3Upload(bucket:"ambuilds/testbuild", workingDir:workspace, includePathPattern:'**/*');
+            }
+
     }
 
     stage('QA') {
