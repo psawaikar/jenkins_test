@@ -3,6 +3,8 @@ node {
 
     stage('Checkout') {
         checkout scm
+
+        echo "Tag Name = $TAG_NAME"
     }
 
     stage('Dev') {

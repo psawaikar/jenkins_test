@@ -6,7 +6,7 @@ from flask import Flask
 print("Statement1")
 print("Statement2")
 print("Statement3")
-print("statement4")
+print("statement4-1")
 
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
