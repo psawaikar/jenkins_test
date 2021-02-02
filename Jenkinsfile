@@ -4,7 +4,11 @@ node {
     stage('Checkout') {
         checkout scm
 
+        echo ${GIT_BRANCH}
+
         //echo "Tag Name = $TAG_NAME"
+
+
     }
 
     stage('Dev') {
@@ -36,10 +40,10 @@ node {
         // When using a GString at least later Jenkins versions could only handle the env.WORKSPACE variant:
         echo "Current workspace is ${env.WORKSPACE}"
 
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-parag', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-         sh "aws s3 ls"
-         sh "aws s3 cp ${workspace} s3://ambuilds/testbuild --recursive"
-         }
+       // withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-parag', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+       //  sh "aws s3 ls"
+       //  sh "aws s3 cp ${workspace} s3://ambuilds/testbuild --recursive"
+       //  }
     }
 
     stage('QA') {
