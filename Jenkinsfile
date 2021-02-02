@@ -5,7 +5,7 @@ node {
         checkout scm
 
         def gitTag = gitTagName()
-        sh echo ${gitTag}
+        sh "echo ${gitTag} "
 
 
         //echo "Tag Name = $TAG_NAME"
