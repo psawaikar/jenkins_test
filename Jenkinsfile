@@ -53,7 +53,7 @@ node {
         echo "QA Stage - TBD LATER"
     }
 
-
+}
 /** @return The tag name, or `null` if the current commit isn't a tag. */
 String gitTagName() {
     commit = getCommit()
@@ -89,4 +89,3 @@ boolean isTag(String desc) {
 }
 
 
-}
