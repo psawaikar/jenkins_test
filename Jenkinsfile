@@ -7,8 +7,7 @@ node {
         def gitTag = gitTagName()
         sh "echo ${gitTag} "
 
-
-        //echo "Tag Name = $TAG_NAME"
+ 
 
 
     }
