@@ -4,8 +4,8 @@ node {
     stage('Checkout') {
         checkout scm
 
-        def gitTagName = gitTagName()
-        echo $gitTagName
+        def gitTag = gitTagName()
+        sh echo ${gitTag}
 
 
         //echo "Tag Name = $TAG_NAME"
