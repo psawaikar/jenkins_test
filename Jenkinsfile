@@ -8,6 +8,7 @@ node {
         sh "echo ${gitTag} "
 
         def dockerTag = getDockerTagfromGitTag(gitTag)
+        sh "echo hello"
         sh "echo ${}dockerTag"
 
 
@@ -17,7 +18,7 @@ node {
 
     stage('Dev') {
         //echo "Hello World"
-        app1 = docker.build('psawaikar/testjenkins:2.0')
+        //app1 = docker.build('psawaikar/testjenkins:2.0')
 
         //**** Unit Testing of each docker image goes here -- ADD LATER
 
