@@ -9,11 +9,12 @@ node {
 
         def dockerTag = getDockerTagfromGitTag(gitTag)
         sh "echo hello"
-        sh "echo ${}dockerTag"
+        sh "echo ${dockerTag}"
 
 
 
-
+//tag=$( echo $name | cut -d'-' -f2 )
+//echo $tag
     }
 
     stage('Dev') {
