@@ -19,6 +19,12 @@ node {
 
     stage('Dev') {
         //echo "Hello World"
+        def dockerhubRepo = "psawaikar/testjenkins"
+        def dockerImageName = dockerhubRepo + dockerTag
+        sh "echo ${dockerImageName}"
+
+
+
         //app1 = docker.build('psawaikar/testjenkins:2.0')
 
         //**** Unit Testing of each docker image goes here -- ADD LATER
