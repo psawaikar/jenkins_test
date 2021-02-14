@@ -7,7 +7,10 @@ node {
         def gitTag = gitTagName()
         sh "echo ${gitTag} "
 
- 
+        def dockerTag = getDockerTagfromGitTag(gitTag)
+        sh "echo ${}dockerTag"
+
+
 
 
     }
@@ -27,10 +30,10 @@ node {
         //**** BAT tests to be run here -- ADD LATER
         //app1.push()
 
-        docker.withRegistry('https://registry.hub.docker.com/', 'psawaikar-DockerHub') {
+        //docker.withRegistry('https://registry.hub.docker.com/', 'psawaikar-DockerHub') {
 
-            app1.push('2.0')
-        }
+       //     app1.push('2.0')
+       // }
 
         def workspace = WORKSPACE
     // ${workspace} will now contain an absolute path to job workspace on slave
@@ -85,6 +88,11 @@ boolean isTag(String desc) {
     result = !match
     match = null // prevent serialisation
     return result
+}
+
+String getDockerTagfromGitTag(String gittag) {
+    tags = gittag.split('-')
+    return tags[1]
 }
 
 
