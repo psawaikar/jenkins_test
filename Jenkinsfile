@@ -1,5 +1,6 @@
 node {
     def app1
+    def dockerTag
 
     stage('Checkout') {
         checkout scm
@@ -7,7 +8,7 @@ node {
         def gitTag = gitTagName()
         sh "echo ${gitTag} "
 
-        def dockerTag = getDockerTagfromGitTag(gitTag)
+        dockerTag = getDockerTagfromGitTag(gitTag)
         sh "echo hello"
         sh "echo ${dockerTag}"
 
