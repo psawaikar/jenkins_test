@@ -1,6 +1,7 @@
 node {
     def app1
     def dockerTag
+    def dockerImageName
 
     stage('Checkout') {
         checkout scm
@@ -21,7 +22,7 @@ node {
     stage('Dev') {
         //echo "Hello World"
         def dockerhubRepo = "psawaikar/testjenkins"
-        def dockerImageName = dockerhubRepo + dockerTag
+        dockerImageName = dockerhubRepo + ":" + dockerTag
         sh "echo ${dockerImageName}"
 
 
