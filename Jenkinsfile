@@ -9,6 +9,7 @@ node {
     def dockerHubID = 'psawaikar-DockerHub'
 
     def gitTag
+    def buildNo
 
     stage('Checkout') {
         checkout scm
@@ -19,6 +20,7 @@ node {
         dockerTag = getDockerTagfromGitTag(gitTag)
         //sh "echo hello"
         sh "echo ${dockerTag}"
+        buildNo = dockerTag
 
 
 
@@ -54,7 +56,7 @@ node {
        }
 
        def baseS3folder = "s3://ambuilds/testbuild/"
-       def destS3folder = baseS3folder + gitTag + "/"
+       def destS3folder = baseS3folder + buildNo + "/"
 
        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-parag', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
          //sh "aws s3 ls"
