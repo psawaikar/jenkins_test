@@ -8,10 +8,12 @@ node {
     def dockerHubRegistry = 'https://registry.hub.docker.com/'
     def dockerHubID = 'psawaikar-DockerHub'
 
+    def gitTag
+
     stage('Checkout') {
         checkout scm
 
-        def gitTag = gitTagName()
+        gitTag = gitTagName()
         sh "echo ${gitTag} "
 
         dockerTag = getDockerTagfromGitTag(gitTag)
@@ -51,9 +53,13 @@ node {
             dockerImage.push(dockerTag)
        }
 
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-parag', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-         sh "aws s3 ls"
-         sh "aws s3 cp ${workspace}/build-qa.yml s3://ambuilds/testbuild/"
+       def baseS3folder = "s3://ambuilds/testbuild/"
+       def destS3folder = baseS3folder + gitTag + "/"
+
+       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-parag', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+         //sh "aws s3 ls"
+
+         sh "aws s3 cp ${workspace}/build-qa.yml ${destS3folder}"
         }
 
         def workspace = WORKSPACE
