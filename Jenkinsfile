@@ -1,8 +1,12 @@
 node {
-    def app1
+    //def app1
     def dockerTag
-    def dockerImageName
+    def dockerImageStr
     def dockerhubRepo = "psawaikar/testjenkins"
+    def dockerImage
+
+    def dockerHubRegistry = 'https://registry.hub.docker.com/'
+    def dockerHubID = 'psawaikar-DockerHub'
 
     stage('Checkout') {
         checkout scm
@@ -23,12 +27,10 @@ node {
     stage('Dev') {
         //echo "Hello World"
 
-        dockerImageName = dockerhubRepo + ":" + dockerTag
-        sh "echo ${dockerImageName}"
+        dockerImageStr = dockerhubRepo + ":" + dockerTag
+        sh "echo ${dockerImageStr}"
 
-
-
-        //app1 = docker.build('psawaikar/testjenkins:2.0')
+        dockerImage = docker.build(dockerImageStr)
 
         //**** Unit Testing of each docker image goes here -- ADD LATER
 
@@ -39,18 +41,17 @@ node {
 
     stage('BAT') {
         //**** BAT tests to be run here -- ADD LATER
-        //app1.push()
+        dockerImage.push()
 
-        //docker.withRegistry('https://registry.hub.docker.com/', 'psawaikar-DockerHub') {
+        docker.withRegistry(dockerHubRegistry, 'psawaikar-DockerHub') {
 
-       //     app1.push('2.0')
-       // }
+            dockerImage.push(dockerTag)
+       }
 
         def workspace = WORKSPACE
-    // ${workspace} will now contain an absolute path to job workspace on slave
+        // ${workspace} will now contain an absolute path to job workspace on slave
 
         workspace = env.WORKSPACE
-    // ${workspace} will still contain an absolute path to job workspace on slave
 
         // When using a GString at least later Jenkins versions could only handle the env.WORKSPACE variant:
         echo "Current workspace is ${env.WORKSPACE}"
