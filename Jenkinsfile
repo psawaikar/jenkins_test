@@ -41,9 +41,9 @@ node {
 
     stage('BAT') {
         //**** BAT tests to be run here -- ADD LATER
-        dockerImage.push()
+        //dockerImage.push()
 
-        docker.withRegistry(dockerHubRegistry, 'psawaikar-DockerHub') {
+        docker.withRegistry(dockerHubRegistry, dockerHubID) {
 
             dockerImage.push(dockerTag)
        }
