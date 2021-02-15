@@ -1,0 +1,147 @@
+version: "2"
+
+services:
+  nats:
+    image: "nats:2.1.9"
+    expose:
+      - "4222"
+    ports:
+      - "8222:8222"
+      - "4222:4222"
+    hostname: nats-server
+
+  redis:
+    image: "redis:alpine"
+    hostname: redis
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+  
+  database:
+    image: 'mongo:latest'
+    container_name: 'mongo'
+    ports:
+      - '27017-27019:27017-27019'
+
+  api:
+    build:
+      context: ./backend/api
+      dockerfile: Dockerfile.qa
+    links:
+      - nats
+    environment:
+      - "NATS_URI=nats://nats:4222"
+    depends_on:
+      - nats
+    volumes:
+      - ./backend/api:/go/src/api
+    ports:
+      - "8080:8080"
+
+  sample:
+    build:
+      context: ./backend/services/sample
+      dockerfile: Dockerfile.qa
+    volumes:
+      - ./backend/services/sample:/go/src/sample
+    links:
+      - nats
+    environment:
+      - "NATS_URI=nats://nats:4222"
+    depends_on:
+      - nats
+    ports:
+      - "3002:3002"
+  
+  users:
+    build:
+      context: ./backend/services/users
+      dockerfile: Dockerfile.qa
+    volumes:
+      - ./backend/services/users:/go/src/users
+    links:
+      - nats
+    environment:
+      - "NATS_URI=nats://nats:4222"
+      - "DATABASE_URI=database:27017"
+      - "REDIS_URI=redis:6379"
+    depends_on:
+      - nats
+    ports:
+      - "3003:3003"
+
+  emails:
+    build:
+      context: ./backend/services/email
+      dockerfile: Dockerfile.qa
+    volumes:
+      - ./backend/services/email:/go/src/email
+    links:
+      - nats
+    environment:
+      - "NATS_URI=nats://nats:4222"
+      - "SMTP_USER_NAME=authmindtest@gmail.com"
+      - "SMTP_PASSWORD=Pass@123"
+      - "SMTP_HOST=smtp.gmail.com"
+      - "SMTP_PORT=587"
+    depends_on:
+      - nats
+
+  global_settings:
+    build:
+      context: ./backend/services/global
+      dockerfile: Dockerfile.qa
+    volumes:
+      - ./backend/services/global:/go/src/global
+    links:
+      - nats
+    environment:
+      - "NATS_URI=nats://nats:4222"
+      - "DATABASE_URI=database:27017"
+      - "REDIS_URI=redis:6379"
+      - "INSTALL_TYPE=OFFLINE"
+    depends_on:
+      - nats
+
+  company_users:
+    build:
+      context: ./backend/services/company_users
+      dockerfile: Dockerfile.qa
+    volumes:
+      - ./backend/services/company_users:/go/src/company_users
+    links:
+      - nats
+    environment:
+      - "NATS_URI=nats://nats:4222"
+      - "DATABASE_URI=database:27017"
+      - "REDIS_URI=redis:6379"
+    depends_on:
+      - nats
+    ports:
+      - "3004:3004"
+
+  incidents:
+    build:
+      context: ./backend/services/incidents
+      dockerfile: Dockerfile.qa
+    volumes:
+      - ./backend/services/incidents:/go/src/incidents
+    links:
+      - nats
+    environment:
+      - "NATS_URI=nats://nats:4222"
+      - "DATABASE_URI=database:27017"
+      - "REDIS_URI=redis:6379"
+    depends_on:
+      - nats
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.qa
+    ports:
+      - "3000:80"
+    volumes:
+      - /htdocs/node_modules
+      - ./frontend:/htdocs
