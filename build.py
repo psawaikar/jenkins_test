@@ -62,11 +62,11 @@ def write_to_tag_file():
 git_tag = write_to_tag_file()
 #print("Outside function = {}".format(git_tag))
 
-cmd_files_add_to_git = "git add TAG TAG_HISTORY"
+cmd_files_add_to_git = "git add TAG"
 print(cmd_files_add_to_git)
 os.system(cmd_files_add_to_git)
 
-cmd_commit = "git commit -m \"Updating TAG files\" "
+cmd_commit = "git commit -m \"Updating TAG file\" "
 print(cmd_commit)
 os.system(cmd_commit)
 
