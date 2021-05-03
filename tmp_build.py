@@ -69,14 +69,14 @@ git_tag = write_to_tag_file()
 #print("Outside function = {}".format(git_tag))
 
 
-cmd_files_add_to_git = "git add tmp_build.py"
+cmd_files_add_to_git = "git add TAG"
 print(cmd_files_add_to_git)
 error_code = os.system(cmd_files_add_to_git)
 print("Error Code = {}".format(error_code))
 if error_code != 0:
       exit_on_error()
 
-cmd_commit = "git commit -m \"Updating tmp_build file\" "
+cmd_commit = "git commit -m \"Updating TAG\" "
 print(cmd_commit)
 error_code = os.system(cmd_commit)
 print("Error Code = {}".format(error_code))
