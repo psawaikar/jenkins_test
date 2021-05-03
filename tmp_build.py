@@ -5,6 +5,7 @@ It stores the latest build_number in TAG file and appends TAG_HISTORY
 """
 
 import os
+import sys
 from datetime import datetime
 
 #Component Name in Git Tag
@@ -16,6 +17,8 @@ dt = today.strftime("%y.%m.%d")
 
 def exit_on_error():
       print("Some error occured. Build NOT triggered. Exiting...")
+      sys.exit(1)
+
 
 def write_to_tag_file():
 
