@@ -13,7 +13,10 @@ AM_SERVER_TAG_FILE = "TAG"
 
 today = datetime.now()
 dt = today.strftime("%y.%m.%d")
-'''
+
+def exit_on_error():
+      print("Some error occured. Build NOT triggered. Exiting...")
+
 def write_to_tag_file():
 
       git_tag = None
@@ -62,30 +65,44 @@ def write_to_tag_file():
 git_tag = write_to_tag_file()
 #print("Outside function = {}".format(git_tag))
 
-'''
+
 cmd_files_add_to_git = "git add tmp_build.py"
 print(cmd_files_add_to_git)
 error_code = os.system(cmd_files_add_to_git)
 print("Error Code = {}".format(error_code))
+if error_code != 0:
+      exit_on_error()
 
-
-'''
-cmd_commit = "git commit -m \"Updating TAG file\" "
+cmd_commit = "git commit -m \"Updating tmp_build file\" "
 print(cmd_commit)
-os.system(cmd_commit)
+error_code = os.system(cmd_commit)
+print("Error Code = {}".format(error_code))
+if error_code != 0:
+      exit_on_error()
+
 
 cmd_push = "git push origin"
 print(cmd_push)
-os.system(cmd_push)
+error_code = os.system(cmd_push)
+print("Error Code = {}".format(error_code))
+if error_code != 0:
+      exit_on_error()
+
 
 cmd_git_tag = "git tag -a " + "\"" + git_tag + "\"   -m \"Build for Tag " + git_tag + "\""
 print(cmd_git_tag)
-os.system(cmd_git_tag)
+error_code = os.system(cmd_git_tag)
+print("Error Code = {}".format(error_code))
+if error_code != 0:
+      exit_on_error()
 
 cmd_git_tag_push = "git push origin " + git_tag
 print(cmd_git_tag_push)
-os.system(cmd_git_tag_push)
-'''
+error_code = os.system(cmd_git_tag_push)
+print("Error Code = {}".format(error_code))
+if error_code != 0:
+      exit_on_error()
+
 
 
 
